@@ -1,0 +1,15 @@
+D:\Projects\CheckSOLID\CheckSOLID\bin\Debug\net6.0\CheckSOLID.exe
+D:\Projects\CheckSOLID\CheckSOLID\bin\Debug\net6.0\CheckSOLID.deps.json
+D:\Projects\CheckSOLID\CheckSOLID\bin\Debug\net6.0\CheckSOLID.runtimeconfig.json
+D:\Projects\CheckSOLID\CheckSOLID\bin\Debug\net6.0\CheckSOLID.dll
+D:\Projects\CheckSOLID\CheckSOLID\bin\Debug\net6.0\CheckSOLID.pdb
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.csproj.AssemblyReference.cache
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.AssemblyInfoInputs.cache
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.AssemblyInfo.cs
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.csproj.CoreCompileInputs.cache
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.dll
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\refint\CheckSOLID.dll
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.pdb
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\CheckSOLID.genruntimeconfig.cache
+D:\Projects\CheckSOLID\CheckSOLID\obj\Debug\net6.0\ref\CheckSOLID.dll
