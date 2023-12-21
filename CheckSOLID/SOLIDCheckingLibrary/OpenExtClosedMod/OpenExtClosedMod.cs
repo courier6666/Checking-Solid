@@ -10,6 +10,7 @@ namespace SOLIDCheckingLibrary
 {
     public static class OpenExtClosedMod
     {
+
         public static (bool, string) IsClassExtensible(Type type, float acceptableExtensibility = 0.25f, bool ignoreInheritedClasses = true)
         {
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic).
