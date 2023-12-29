@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static SOLIDCheckingLibrary.Utility;
 
 namespace SOLIDCheckingLibrary
 {
@@ -11,14 +12,17 @@ namespace SOLIDCheckingLibrary
     {
         public static (bool, string) CheckClassMethodsForManyParameters(Type type, int countThreshold = 8)
         {
-            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToList();
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
+                Where(m=>m.DeclaringType == type).
+                Where(m=>!IsDefaultMethod(m)).
+                ToList();
 
             bool followsPrinciple = true;
             string checkLog = "";
 
-            foreach(var method in methods)
+            foreach (var method in methods)
             {
-                if(method.GetParameters().Length > countThreshold)
+                if (method.GetParameters().Length > countThreshold)
                 {
                     followsPrinciple = false;
                     checkLog += $"Method {method.ToString()} has too many arguments: {method.GetParameters().Length}.\n";
@@ -31,8 +35,12 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) CheckClassForManyMethods(Type type, int countThreshold = 12)
         {
-            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).ToList();
-            bool followsPrinciple = (methods.Count >= countThreshold);
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
+                Where(m => m.DeclaringType == type).
+                Where(m => !IsDefaultMethod(m)).
+                ToList();
+
+            bool followsPrinciple = (methods.Count <= countThreshold);
             return (followsPrinciple, $"The class has {methods.Count}, threshold is {countThreshold}!");
         }
         public static (bool, string) CheckClassForSingleResponsibility(Type type, int thresholdOfMethods = 12, int thresholdOfMethodParameters = 8)

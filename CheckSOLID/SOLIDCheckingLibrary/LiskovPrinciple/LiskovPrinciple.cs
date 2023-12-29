@@ -66,7 +66,7 @@ namespace SOLIDCheckingLibrary
             return (result, result ? $"Classes {childClass.Name} and {parentClass.Name} follow Liskov Principle!" :
                 $"Classes {childClass.Name} and {parentClass.Name} DON'T follow Liskov Principle!\n" + checkLog);
         }
-        public static (bool, string) CheckMethodOfParentIsOverriden(Type childClass, Type parentClass)
+        public static (bool, string) CheckMethodsOfParentIsOverriden(Type childClass, Type parentClass)
         {
             var childMethods = childClass.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m => !IsDefaultMethod(m)).ToList();

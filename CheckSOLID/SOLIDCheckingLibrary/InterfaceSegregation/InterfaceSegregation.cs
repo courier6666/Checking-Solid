@@ -11,7 +11,8 @@ namespace SOLIDCheckingLibrary
     {
         private static object? CreateInstanceOfClass(Type classType)
         {
-            var firstConstructor = classType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).First();
+            var firstConstructor = classType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
+                First();
             var arguments = firstConstructor.GetParameters().
                 Select(p => p.ParameterType.IsValueType ? Activator.CreateInstance(p.ParameterType) : null).
                 ToArray();
@@ -42,53 +43,6 @@ namespace SOLIDCheckingLibrary
 
             return true;
         }
-        public static bool PropertyGetIsImplemented(PropertyInfo propertyInfo, Type initialClass)
-        {
-            var getMethod = propertyInfo.GetGetMethod();
-            if(getMethod == null)
-                return false;
-
-            try
-            {
-                var instance = CreateInstanceOfClass(initialClass);
-                propertyInfo.GetValue(instance);
-            }
-            catch (TargetInvocationException ex)
-            {
-                if (ex.InnerException is NotImplementedException)
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                return true;
-            }
-
-            return true;
-        }
-        public static bool PropertySetIsImplemented(PropertyInfo propertyInfo, Type initialClass)
-        {
-            var getMethod = propertyInfo.GetSetMethod();
-            if (getMethod == null)
-                return false;
-
-            try
-            {
-                var setArgument = propertyInfo.PropertyType.IsValueType ? Activator.CreateInstance(propertyInfo.PropertyType) : null;
-                var instance = CreateInstanceOfClass(initialClass);
-                propertyInfo.SetValue(instance,setArgument);
-            }
-            catch (TargetInvocationException ex)
-            {
-                if (ex.InnerException is NotImplementedException)
-                    return false;
-            }
-            catch(Exception ex)
-            {
-                return true;
-            }
-
-            return true;
-        }
         public static (bool, string) ClassMethodsFollowPrinciple(Type type)
         {
             var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
@@ -108,58 +62,14 @@ namespace SOLIDCheckingLibrary
 
             return (followsPrinciple, checkLog);
         }
-        public static (bool, string) ClassPropertiesFollowPrinciple(Type type)
-        {
-            var allProperties = type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            bool followsPrinciple = true;
-            string checkLog = "";
-
-            foreach(var property in allProperties)
-            {
-                bool propertyIsImplemented = true;
-                string checkPropertyLog = "";
-                if(property.GetGetMethod() != null)
-                {
-                    if(!PropertyGetIsImplemented(property, type))
-                    {
-                        propertyIsImplemented = false;
-                        checkPropertyLog += "Getter is not implemented!\n";
-                    }
-                }
-                if(property.GetSetMethod() != null)
-                {
-                    if (!PropertySetIsImplemented(property, type))
-                    {
-                        propertyIsImplemented = false;
-                        checkPropertyLog += "Setter is not implemented!\n";
-                    }
-                }
-
-                if (!propertyIsImplemented) 
-                    checkLog += $"Property {property.ToString()} is not implemented!\n" + checkPropertyLog;
-
-                followsPrinciple &= propertyIsImplemented;
-            }
-
-            if (followsPrinciple) checkLog = $"Properties of class {type.Name} follow the principle";
-            else checkLog = $"Properites of class {type.Name} failed to follow the principle!\n" + checkLog;
-
-            return (followsPrinciple, checkLog);
-        }
         public static (bool, string) ClassFollowsPrinciple(Type type)
         {
             bool followsPrinciple = true;
             string checkLog = "";
             var methodsCheck = ClassMethodsFollowPrinciple(type);
-            var propertiesCheck = ClassPropertiesFollowPrinciple(type);
             if(!methodsCheck.Item1)
             {
                 checkLog += methodsCheck.Item2 + "\n";
-                followsPrinciple = false;
-            }
-            if(!propertiesCheck.Item1)
-            {
-                checkLog += propertiesCheck.Item2 + "\n";
                 followsPrinciple = false;
             }
             if (followsPrinciple) checkLog = $"Class {type.Name} follows the principle of interface segregation";

@@ -18,52 +18,29 @@ namespace SOLIDCheckingLibrary
         public static List<Type> allBasicCollectionTypes = new List<Type>()
         {
             // System.Collections Namespace
-            typeof(ArrayList),
-            typeof(BitArray),
-            typeof(Hashtable),
-            typeof(Queue),
-            typeof(SortedList),
+            typeof(ArrayList),typeof(BitArray),typeof(Hashtable),typeof(Queue),typeof(SortedList),
         
             // System.Collections.Generic Namespace
-            typeof(List<>),
-            typeof(Dictionary<,>),
-            typeof(HashSet<>),
-            typeof(Queue<>),
-            typeof(Stack<>),
+            typeof(List<>),typeof(Dictionary<,>),typeof(HashSet<>),typeof(Queue<>),typeof(Stack<>),
         
             // System.Collections.Concurrent Namespace
-            typeof(ConcurrentBag<>),
-            typeof(ConcurrentDictionary<,>),
-            typeof(ConcurrentQueue<>),
-            typeof(ConcurrentStack<>),
+            typeof(ConcurrentBag<>),typeof(ConcurrentDictionary<,>),typeof(ConcurrentQueue<>),typeof(ConcurrentStack<>),
         
             // System.Collections.Specialized Namespace
             typeof(NameValueCollection),
         
             // System.Collections.ObjectModel Namespace
-            typeof(Collection<>),
-            typeof(ObservableCollection<>),
-            typeof(ReadOnlyCollection<>),
-            typeof(ReadOnlyDictionary<,>),
+            typeof(Collection<>), typeof(ObservableCollection<>),typeof(ReadOnlyCollection<>),typeof(ReadOnlyDictionary<,>),
         
             // System.Collections.Immutable Namespace
-            typeof(ImmutableArray<>),
-            typeof(ImmutableList<>),
-            typeof(ImmutableDictionary<,>),
-            typeof(ImmutableHashSet<>),
-            typeof(ImmutableSortedSet<>),
-            typeof(ImmutableQueue<>),
-            typeof(ImmutableStack<>),
+            typeof(ImmutableArray<>),typeof(ImmutableList<>),typeof(ImmutableDictionary<,>),typeof(ImmutableHashSet<>),
+            typeof(ImmutableSortedSet<>),typeof(ImmutableQueue<>),typeof(ImmutableStack<>),
         
             // System.Text.RegularExpressions Namespace
-            typeof(MatchCollection),
-            typeof(GroupCollection),
-            typeof(CaptureCollection),
+            typeof(MatchCollection),typeof(GroupCollection),typeof(CaptureCollection),
         
             // System.Net.Mail Namespace
-            typeof(AlternateViewCollection),
-            typeof(AttachmentCollection),
-            typeof(LinkedResourceCollection),
+            typeof(AlternateViewCollection),typeof(AttachmentCollection),typeof(LinkedResourceCollection),
         };
     }
 }

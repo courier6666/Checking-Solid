@@ -39,7 +39,6 @@ namespace SOLIDCheckingLibrary
             if((settings & CheckingSettings.IgnoreModels) > 0)
                 if(IsModel(type))
                     return true;
-                
 
             return false;
         }
@@ -85,14 +84,15 @@ namespace SOLIDCheckingLibrary
                     if (!DoesTypeFollowPrinciple(parameter.ParameterType, type, settings))
                     {
                         ctorFollowPrinciple = false;
-                        checkLogForCtor += $"Argument {currentArgument} - {parameter.ParameterType.Name} {parameter.Name}, is a class or if generic, contains class parameters!'\n";
+                        checkLogForCtor += $"Argument {currentArgument} - {parameter.ParameterType.Name} {parameter.Name}, " +
+                            $"is a class or if generic, contains class parameters!'\n";
                     }
                     currentArgument++;
                 }
                 followsPrinciple &= ctorFollowPrinciple;
                 if (!ctorFollowPrinciple)
                 {
-                    checkLogForCtor = $"Constructor {constructor.ToString()} doesn't follow the principle!\n" + checkLogForCtor;
+                    checkLogForCtor = $"Constructor {constructor} doesn't follow the principle!\n" + checkLogForCtor;
                     checkLog += checkLogForCtor;
                 }
             }
@@ -103,7 +103,6 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassMethodsFollowPrinciple(Type type, CheckingSettings settings)
         {
-
             var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m => !IsDefaultMethod(m));
 
@@ -136,10 +135,9 @@ namespace SOLIDCheckingLibrary
 
                 if (!methodFollowsPrinciple)
                 {
-                    checkLogForMethod = $"Method {method.ToString()} doesn't follow the principle!\n" + checkLogForMethod;
+                    checkLogForMethod = $"Method {method} doesn't follow the principle!\n" + checkLogForMethod;
                     checkLog += checkLogForMethod;
                 }
-
                 followsPrinciple &= methodFollowsPrinciple;
             }
 
@@ -162,7 +160,8 @@ namespace SOLIDCheckingLibrary
                 if (!DoesTypeFollowPrinciple(field.FieldType, type, settings))
                 {
                     followsPrinciple = false;
-                    checkLog += $"Field  - {field.FieldType.ToString()} {field.Name} -  doesn't follow the principle, is a class or if generic, contains class parameters!\n";
+                    checkLog += $"Field  - {field.FieldType} {field.Name} -  " +
+                        $"doesn't follow the principle, is a class or if generic, contains class parameters!\n";
                 }
             }
 
@@ -183,7 +182,8 @@ namespace SOLIDCheckingLibrary
                 if (!DoesTypeFollowPrinciple(property.PropertyType, type, settings))
                 {
                     followsPrinciple = false;
-                    checkLog += $"Property  - {property.PropertyType.ToString()} {property.Name} -  doesn't follow the principle, is a class or if generic, contains class parameters!\n";
+                    checkLog += $"Property  - {property.PropertyType} {property.Name} -  " +
+                        $"doesn't follow the principle, is a class or if generic, contains class parameters!\n";
                 }
             }
 
