@@ -19,7 +19,10 @@ namespace SOLIDCheckingLibrary
                 methodInfo.Name == "MemberwiseClone" ||
                 methodInfo.Name == "Finalize");
         }
-
+        public static bool IsAnyClass(Type type)
+        {
+            return type.IsClass && type != typeof(string);
+        }
         public static bool ArgumentsAreSame(MethodInfo method1, MethodInfo method2)
         {
             if (method1.GetParameters().Length != method2.GetParameters().Length) return false;

@@ -11,6 +11,7 @@ namespace SOLIDCheckingLibrary
 {
     public static class DependencyInversion
     {
+        [Flags]
         public enum CheckingSettings
         {
             IgnoreBasicCollectionTypes = 0b00001,
@@ -70,6 +71,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassConstructorsFollowPrinciple(Type type, CheckingSettings settings)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var constructors = type.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             string checkLog = "";
             bool followsPrinciple = true;
@@ -103,6 +109,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassMethodsFollowPrinciple(Type type, CheckingSettings settings)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m => !IsDefaultMethod(m));
 
@@ -148,6 +159,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassFieldsFollowPrinciple(Type type, CheckingSettings settings)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var allFields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
             if ((settings & CheckingSettings.IgnoreInheritedFields) != 0) allFields = allFields.Where(f => f.DeclaringType == type).ToArray();
@@ -172,6 +188,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassPropertiesFollowPrinciple(Type type, CheckingSettings settings)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var allProperties = type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if ((settings & CheckingSettings.IgnoreInheritedFields) != 0) allProperties = allProperties.Where(p => p.DeclaringType == type).ToArray();
             string checkLog = "";

@@ -12,6 +12,11 @@ namespace SOLIDCheckingLibrary
     {
         public static (bool, string) CheckClassMethodsForManyParameters(Type type, int countThreshold = 8)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m=>m.DeclaringType == type).
                 Where(m=>!IsDefaultMethod(m)).
@@ -35,6 +40,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) CheckClassForManyMethods(Type type, int countThreshold = 12)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m => m.DeclaringType == type).
                 Where(m => !IsDefaultMethod(m)).
@@ -45,6 +55,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) CheckClassForSingleResponsibility(Type type, int thresholdOfMethods = 12, int thresholdOfMethodParameters = 8)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var resultMethods = CheckClassForManyMethods(type, thresholdOfMethods);
             var resultParameters = CheckClassMethodsForManyParameters(type, thresholdOfMethodParameters);
 

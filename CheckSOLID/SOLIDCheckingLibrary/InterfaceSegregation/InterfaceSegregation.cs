@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static SOLIDCheckingLibrary.Utility;
 
 namespace SOLIDCheckingLibrary
 {
@@ -11,6 +12,11 @@ namespace SOLIDCheckingLibrary
     {
         private static object? CreateInstanceOfClass(Type classType)
         {
+            if (!IsAnyClass(classType))
+            {
+                throw new ArgumentException("Provided classType is not a class type!", nameof(classType));
+            }
+
             var firstConstructor = classType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 First();
             var arguments = firstConstructor.GetParameters().
@@ -22,6 +28,11 @@ namespace SOLIDCheckingLibrary
         
         public static bool MethodIsImplemented(MethodInfo methodInfo, Type initialClass)
         {
+            if (!IsAnyClass(initialClass))
+            {
+                throw new ArgumentException("Provided initialClass is not a class type!", nameof(initialClass));
+            }
+
             var arguments = methodInfo.GetParameters().
                 Select(p => p.ParameterType.IsValueType ? Activator.CreateInstance(p.ParameterType) : null).
                 ToArray();
@@ -45,6 +56,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassMethodsFollowPrinciple(Type type)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var allMethods = type.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             bool followsPrinciple = true;
             string checkLog = "";
@@ -64,6 +80,11 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) ClassFollowsPrinciple(Type type)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             bool followsPrinciple = true;
             string checkLog = "";
             var methodsCheck = ClassMethodsFollowPrinciple(type);

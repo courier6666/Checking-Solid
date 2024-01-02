@@ -26,6 +26,21 @@ namespace SOLIDCheckingLibrary
         /// <returns></returns>
         public static (bool, string) CheckLSPForMethodTwoClasses(Type classInvokingMethod, MethodInfo method, object[]? methodParam, Type childClass, Type parentClass, object[]? constructorParam) 
         {
+            if (!IsAnyClass(classInvokingMethod))
+            {
+                throw new ArgumentException("Provided type of classInvokingMethod is not a class type!", nameof(classInvokingMethod));
+            }
+
+            if (!IsAnyClass(childClass))
+            {
+                throw new ArgumentException("Provided type of childClass is not a class type!", nameof(childClass));
+            }
+
+            if (!IsAnyClass(parentClass))
+            {
+                throw new ArgumentException("Provided type of parentClass is not a class type!", nameof(parentClass));
+            }
+
             var _childClass = Activator.CreateInstance(childClass, constructorParam);
             var _parentClass = Activator.CreateInstance(parentClass, constructorParam);
 
@@ -68,6 +83,16 @@ namespace SOLIDCheckingLibrary
         }
         public static (bool, string) CheckMethodsOfParentIsOverriden(Type childClass, Type parentClass)
         {
+            if (!IsAnyClass(childClass))
+            {
+                throw new ArgumentException("Provided type of childClass is not a class type!", nameof(childClass));
+            }
+
+            if (!IsAnyClass(parentClass))
+            {
+                throw new ArgumentException("Provided type of parentClass is not a class type!", nameof(parentClass));
+            }
+
             var childMethods = childClass.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).
                 Where(m => !IsDefaultMethod(m)).ToList();
             var parentMethods = parentClass.GetMethods(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).

@@ -3,9 +3,11 @@ using SOLIDCheckingLibrary;
 
 IDictionary<List<List<int>>, Stack<int>> v = null;
 
-ExternalMethod(new B());
+DependencyInversion.CheckingSettings flags = DependencyInversion.CheckingSettings.IgnoreInheritedFields
+   | DependencyInversion.CheckingSettings.IgnoreModels
+   | DependencyInversion.CheckingSettings.IgnoreBasicCollectionTypes;
 
-InterfaceSegregation.ClassFollowsPrinciple(typeof(A));
+Console.WriteLine(flags);
 
 void ExternalMethod(A instance)
 {

@@ -13,6 +13,11 @@ namespace SOLIDCheckingLibrary
         //some change
         public static (bool, string) IsClassExtensible(Type type, float acceptableExtensibility = 0.25f, bool ignoreInheritedClasses = true)
         {
+            if (!IsAnyClass(type))
+            {
+                throw new ArgumentException("Provided type is not a class type!", nameof(type));
+            }
+
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic).
                 Where(m => !IsDefaultMethod(m));
 
